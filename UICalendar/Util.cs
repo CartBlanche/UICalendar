@@ -53,13 +53,20 @@ namespace UICalendar
 		}
 
 		public static EKEventStore MyEventStore = new EKEventStore ();
+		public static EKCalendar MyCalendar = null;
+		public static string MyTitle = "Calendar";
 
 		public static EKEvent[] FetchEvents (DateTime startDate, DateTime endDate)
 		{
 			// Create the predicate. Pass it the default calendar.
 			//Util.WriteLine ("Getting Calendars");
-			EKEventStore store = new EKEventStore ();
-			var calendarArray = store.Calendars;
+			EKEventStore store = MyEventStore;
+			EKCalendar[] calendarArray;
+			if (MyCalendar == null)
+			  calendarArray = store.Calendars;
+			else
+				calendarArray = new EKCalendar[] { MyCalendar };
+			
 			//Util.WriteLine ("Predicate");
 			//Convert to NSDate
 			NSDate nstartDate = Util.DateTimeToNSDate (startDate);
@@ -103,7 +110,11 @@ namespace UICalendar
 		public static EKEvent getEvent (CalendarDayEventView theEventView)
 		{
 			EKEventStore store = MyEventStore;
-			var calendarArray = store.Calendars;
+			EKCalendar[] calendarArray;
+			if (MyCalendar == null)
+			  calendarArray = store.Calendars;
+			else
+				calendarArray = new EKCalendar[] { MyCalendar };
 			//Util.WriteLine ("Predicate");
 			//var newNSDate = (NSDate)theEventView.endDate;
 			//Console.WriteLine ("Date is: {0} {1} {2}", NSDate.Now.ToString (), ((NSDate) DateTime.Now).ToString (), DateTime.Now);

@@ -197,7 +197,10 @@ namespace UICalendar
 				addController.EventStore = Util.MyEventStore;
 				addController.Event = Util.getEvent (theEvent);
 				
-				addController.Completed += delegate(object sender, EKEventEditEventArgs e) { this.DismissModalViewControllerAnimated (true); };
+				addController.Completed += delegate(object sender, EKEventEditEventArgs e) 
+				{ 
+					this.DismissModalViewControllerAnimated (true); 
+				};
 				
 				try {
 					if (this.ModalViewController == null)
@@ -239,12 +242,14 @@ namespace UICalendar
 		{
 			//  _leftButton = new UIBarButtonItem("Calendars", UIBarButtonItemStyle.Bordered, HandlePreviousDayTouch);
 			NavigationItem.LeftBarButtonItem = _orgLefButton;
-			NavigationItem.Title = "Calendar";
+			NavigationItem.Title = Util.MyTitle;
 			_rightButton = new UIBarButtonItem (UIBarButtonSystemItem.Add, delegate {
 				addController = new EKEventEditViewController();	
 				// set the addController's event store to the current event store.
 				addController.EventStore = Util.MyEventStore;
-				addController.Event = EKEvent.FromStore(Util.MyEventStore);
+				addController.Event = EKEvent.FromStore(Util.MyEventStore);	
+				if (Util.MyCalendar != null)
+					addController.Event.Calendar = Util.MyCalendar;
 				addController.Event.StartDate = DateTime.Now;
 				addController.Event.EndDate = DateTime.Now.AddHours(1);
 				
