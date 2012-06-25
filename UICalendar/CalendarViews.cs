@@ -161,7 +161,7 @@ namespace UICalendar
 		{
 			
 			notificationObserver = NSNotificationCenter.DefaultCenter.AddObserver ("EKEventStoreChangedNotification", EventsChanged);
-			this.Title = "Calendar";
+			this.Title = Util.MyTitle;
 			CurrentDate = DateTime.Today;
 			SingleDayView = new CalendarDayTimelineView (rect, tabBarHeight);
 			WeekView = new TrueWeekView (CurrentDate);
